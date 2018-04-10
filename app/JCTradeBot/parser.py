@@ -1,5 +1,5 @@
 from binance.client import Client
-from models import OHLCVValue
+from .models import OHLCVValue
 
 class DataParser(object):
 	"""docstring for DataParser"""
