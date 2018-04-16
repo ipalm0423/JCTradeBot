@@ -1,3 +1,5 @@
+import datetime
+
 class OHLCVValue:
 	def __init__(self, open_time, open_price, highest_price, lowest_price, close_price, volume, close_time):
 		self.open_time = open_time
@@ -11,5 +13,29 @@ class OHLCVValue:
 	@classmethod
 	def from_array(cls, array):
 		return cls(array[0], array[1], array[2], array[3], array[4], array[5], array[6])
+
+	@property
+	def open_date_str(self):
+		return datetime.datetime.fromtimestamp(self.open_time/1000).strftime('%Y-%m-%d %H:%M:%S')
+		pass
+
+	@property
+	def close_date_str(self):
+		return datetime.datetime.fromtimestamp(self.close_time/1000).strftime('%Y-%m-%d %H:%M:%S')
+		pass
 		
 
+class AnalyzeData(object):
+	"""docstring for AnalyzeData"""
+	def __init__(self, klines):
+		super(AnalyzeData, self).__init__()
+		self.klines = klines
+		pass
+
+
+class AnalyzeResult(object):
+	"""docstring for AnalyzeResult"""
+	def __init__(self, slope):
+		super(AnalyzeResult, self).__init__()
+		self.slope = slope
+		pass

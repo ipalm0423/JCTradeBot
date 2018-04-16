@@ -2,6 +2,7 @@ import parser
 import time
 import asyncio
 import threading
+from .models import AnalyzeData
 
 class Trader(object):
 	"""docstring for Trader"""
@@ -37,15 +38,23 @@ class Trader(object):
 	async def trading_async(self):
 		print("start trading")
 		while True:
-			#parsing
-			klines = self.parser.get_kline_30()
-			print("get data from time:{} to time:{}".format(klines[0].open_time, klines[-1].close_time))
-
-			#analytic
+			#check loop
 			if not self._shouldRunning:
 				break
 				pass
+
+			#parsing
+			klines = self.parser.get_kline_in_minute(5)
+			newData = AnalyzeData(klines)
+			
+			print("get data from time:{} to time:{}".format(klines[0].open_date_str, klines[-1].close_date_str))
+
+			#analytic
+			result = self.analyzer.updateNewData(newData)
+			print("analyze data and get result: {}".format(result))
+
 			#order
+
 
 			#sleep
 			time.sleep(self.period)
