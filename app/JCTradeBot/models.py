@@ -34,15 +34,30 @@ class OHLCVValue:
     @property
     def close_date_str(self):
         return datetime.datetime.fromtimestamp(self.close_time / 1000).strftime('%Y-%m-%d %H:%M:%S')
-        pass
 
     @property
-    def velocity(self):
-        pass
+    def mid_time(self):
+        return (self.open_time + self.close_time) / 2
 
     @property
-    def acceleration(self):
-        pass
+    def duration_time(self):
+        return self.close_time - self.open_time
+
+    @property
+    def price_change(self):
+        return self.close_price - self.open_price
+
+    @property
+    def price_change_percent(self):
+        return self.price_change / self.open_price
+
+    @property
+    def price_change_velocity(self):
+        return self.price_change / self.duration_time
+
+    @property
+    def price_change_percent_velocity(self):
+        return self.price_change_percent / self.duration_time
 
 
 class AnalyzeData(object):
@@ -51,10 +66,6 @@ class AnalyzeData(object):
     def __init__(self, k_lines):
         super(AnalyzeData, self).__init__()
         self.k_lines = k_lines
-        pass
-
-    @property
-    def slope(self):
         pass
 
 
