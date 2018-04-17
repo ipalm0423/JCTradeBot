@@ -23,6 +23,14 @@ class OHLCVValue:
 	def close_date_str(self):
 		return datetime.datetime.fromtimestamp(self.close_time/1000).strftime('%Y-%m-%d %H:%M:%S')
 		pass
+
+	@property
+	def velocity(self):
+		pass
+
+	@property
+	def acceleration(self):
+		pass
 		
 
 class AnalyzeData(object):
@@ -30,6 +38,11 @@ class AnalyzeData(object):
 	def __init__(self, klines):
 		super(AnalyzeData, self).__init__()
 		self.klines = klines
+		pass
+
+	@property
+	def slope(self):
+
 		pass
 
 
