@@ -12,8 +12,19 @@ class OHLCVValue:
         self.close_time = close_time
 
     @classmethod
-    def from_array(cls, array):
+    def from_datas(cls, array):
         return cls(array[0], array[1], array[2], array[3], array[4], array[5], array[6])
+
+    @classmethod
+    def from_data_array(cls, k_lines):
+        temp = []
+
+        for k_line in k_lines:
+            new_value = OHLCVValue.from_datas(k_line)
+            temp.append(new_value)
+            pass
+
+        return temp
 
     @property
     def open_date_str(self):
