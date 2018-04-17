@@ -1,30 +1,25 @@
 class Analyzer(object):
+    maxBudget = 0
+    currentPurchase = 0
 
-	maxBudget = 0
-	currentPurchase = 0
+    """docstring for Analyzer"""
 
-	"""docstring for Analyzer"""
-	def __init__(self, symbol):
-		super(Analyzer, self).__init__()
-		self.symbol = symbol
-		self.updateBaseData()
-		pass
+    def __init__(self, symbol):
+        super(Analyzer, self).__init__()
+        self.symbol = symbol
+        self.update_base_data()
+        self.current_data = None
+        pass
 
-	def updateBaseData(self):
-		#api/v1/ticker/24hr
-		#1 year volume
+    def update_base_data(self):
+        pass
 
-		pass
+    def update_new_data(self, analyze_data):
+        self.current_data = analyze_data
 
-	def updateNewData(self, analyzeData):
-		self.currentData = analyzeData
+        # calculate
+        # volume
+        # slope
 
-		#calculate
-		#volume
-		#slope
-
-		#result
-		pass
-		
-
-		
+        # result
+        pass

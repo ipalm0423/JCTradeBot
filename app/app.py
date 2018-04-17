@@ -1,7 +1,7 @@
 from JCTradeBot.trader import Trader
 from JCTradeBot.parser import DataParser
 from JCTradeBot.analyzer import Analyzer
-import time
+
 
 eth_parser = DataParser("ETHUSDT")
 eth_analyzer = Analyzer("ETHUSDT")
