@@ -118,16 +118,31 @@ class AnalyzeData(object):
 
 class AnalyzeResult(object):
     """docstring for AnalyzeResult"""
-    is_rise_quickly = False
 
-    def __init__(self):
+    """constant"""
+    k_going_up = "[ 向上 ]"
+    k_going_down = "[ 向下 ]"
+
+    """property"""
+    is_change_quickly = False
+    is_rise = False
+
+    def __init__(self, symbol):
         super(AnalyzeResult, self).__init__()
+        self.symbol = symbol
         pass
 
     def __str__(self):
         description = "\nAnalyze Result:"
 
-        if self.is_rise_quickly:
-            description += "\n warning is_rise_quickly"
+        if self.is_change_quickly:
+            description += "\n warning: is change quickly"
 
         return description
+
+    def reminder_msg(self):
+        if self.is_change_quickly:
+            direction = self.k_going_up if self.is_rise else self.k_going_down
+            return "{}貨幣{}大量變化中，請注意".format(self.symbol, direction)
+
+        return None

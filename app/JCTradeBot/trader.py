@@ -1,8 +1,9 @@
-import parser
 import time
 import asyncio
 import threading
-from .models import AnalyzeData
+from .models import AnalyzeData, AnalyzeResult
+from .messenger import JCBMessenger
+from .parser import DataParser
 
 
 class Trader(object):

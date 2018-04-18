@@ -1,5 +1,4 @@
-from .models import AnalyzeData
-from .models import AnalyzeResult
+from .models import AnalyzeData, AnalyzeResult
 
 
 class Analyzer(object):
@@ -8,7 +7,7 @@ class Analyzer(object):
 
     """index property"""
     vol_change_ratio_gate = 2
-    price_change_gate = 1
+    price_change_gate = 5
 
     """docstring for Analyzer"""
 
@@ -17,7 +16,6 @@ class Analyzer(object):
         self.symbol = symbol
         self.update_base_data()
         self.current_data = None
-        self.result = AnalyzeResult()
         pass
 
     def update_base_data(self):
@@ -25,26 +23,27 @@ class Analyzer(object):
 
     def update_new_data(self, analyze_data: AnalyzeData) -> AnalyzeResult:
         self.current_data = analyze_data
+        result = AnalyzeResult(self.symbol)
         print("\nanalyze {} from time:{} to time:{}".format(self.symbol,
                                                           analyze_data.start_date_str,
                                                           analyze_data.end_date_str))
 
         # calculate
-        self.check_is_rise_quickly()
+        result.is_change_quickly = self.is_change_quickly
+        result.is_rise = self.going_direction
 
         # judge
 
-        # result
-        return self.result
+        return result
 
-    def check_is_rise_quickly(self):
+    @property
+    def is_change_quickly(self):
         vol_change_ratio = self.current_data.volume_SMA(3) / self.current_data.volume_SMA(10)
         price_change_ratio = abs(self.current_data.price_change_percent_sum_from_last(3)
                                  / self.current_data.price_change_percent_sum_from_last(10))
 
-        if vol_change_ratio > self.vol_change_ratio_gate and \
-                price_change_ratio > self.price_change_gate and \
-                self.current_data.price_change_percent_sum_from_last(3) > 0:
-            self.result.is_rise_quickly = True
+        return vol_change_ratio > self.vol_change_ratio_gate and price_change_ratio > self.price_change_gate
 
-        pass
+    @property
+    def going_direction(self):
+        return self.current_data.price_change_percent_sum_from_last(3) > 0
