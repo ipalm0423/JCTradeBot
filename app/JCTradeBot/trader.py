@@ -48,11 +48,9 @@ class Trader(object):
             k_lines = self.parser.get_kline_in_minute(5)
             new_data = AnalyzeData(k_lines)
 
-            print("get data from time:{} to time:{}".format(k_lines[0].open_date_str, k_lines[-1].close_date_str))
-
             # analytic
             result = self.analyzer.update_new_data(new_data)
-            print("analyze data and get result: {}".format(result))
+            print(result)
 
             # order
 

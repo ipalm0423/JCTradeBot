@@ -17,6 +17,7 @@ class Analyzer(object):
         self.symbol = symbol
         self.update_base_data()
         self.current_data = None
+        self.result = AnalyzeResult()
         pass
 
     def update_base_data(self):
@@ -24,9 +25,19 @@ class Analyzer(object):
 
     def update_new_data(self, analyze_data: AnalyzeData) -> AnalyzeResult:
         self.current_data = analyze_data
-        new_result = AnalyzeResult()
+        print("\nanalyze {} from time:{} to time:{}".format(self.symbol,
+                                                          analyze_data.start_date_str,
+                                                          analyze_data.end_date_str))
 
         # calculate
+        self.check_is_rise_quickly()
+
+        # judge
+
+        # result
+        return self.result
+
+    def check_is_rise_quickly(self):
         vol_change_ratio = self.current_data.volume_SMA(3) / self.current_data.volume_SMA(10)
         price_change_ratio = abs(self.current_data.price_change_percent_sum_from_last(3)
                                  / self.current_data.price_change_percent_sum_from_last(10))
@@ -34,10 +45,6 @@ class Analyzer(object):
         if vol_change_ratio > self.vol_change_ratio_gate and \
                 price_change_ratio > self.price_change_gate and \
                 self.current_data.price_change_percent_sum_from_last(3) > 0:
-            new_result.is_rise_quickly = True
-            pass
+            self.result.is_rise_quickly = True
 
-        # judge
-
-        # result
-        return new_result
+        pass

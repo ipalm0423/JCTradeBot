@@ -70,6 +70,16 @@ class AnalyzeData(object):
         pass
 
     @property
+    def start_date_str(self):
+        ohcv = self.k_lines[0]  # type: OHLCVValue
+        return ohcv.open_date_str
+
+    @property
+    def end_date_str(self):
+        ohcv = self.k_lines[-1]  # type: OHLCVValue
+        return ohcv.close_date_str
+
+    @property
     def price_change_percent_sum(self):
         return self.price_change_percent_sum_from_last(len(self.k_lines))
 
@@ -113,3 +123,11 @@ class AnalyzeResult(object):
     def __init__(self):
         super(AnalyzeResult, self).__init__()
         pass
+
+    def __str__(self):
+        description = "\nAnalyze Result:"
+
+        if self.is_rise_quickly:
+            description += "\n warning is_rise_quickly"
+
+        return description

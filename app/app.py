@@ -11,7 +11,7 @@ eth_trader = Trader(5, eth_parser, eth_analyzer)
 eth_trader.start()
 
 while True:
-    command = input("input your command:")
+    command = input("\ninput your command:\n")
 
     if command == "end":
         break
