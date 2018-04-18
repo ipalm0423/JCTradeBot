@@ -13,7 +13,8 @@ class OHLCVValue:
 
     @classmethod
     def from_datas(cls, array):
-        return cls(array[0], array[1], array[2], array[3], array[4], array[5], array[6])
+        return cls(int(array[0]), float(array[1]), float(array[2]), float(array[3]),
+                   float(array[4]), float(array[5]), int(array[6]))
 
     @classmethod
     def from_data_array(cls, k_lines):
@@ -40,8 +41,8 @@ class OHLCVValue:
         return (self.open_time + self.close_time) / 2
 
     @property
-    def duration_time(self):
-        return self.close_time - self.open_time
+    def duration_time_in_second(self):
+        return (self.close_time - self.open_time) * 1000
 
     @property
     def price_change(self):
@@ -53,11 +54,11 @@ class OHLCVValue:
 
     @property
     def price_change_velocity(self):
-        return self.price_change / self.duration_time
+        return self.price_change / self.duration_time_in_second
 
     @property
     def price_change_percent_velocity(self):
-        return self.price_change_percent / self.duration_time
+        return self.price_change_percent / self.duration_time_in_second
 
 
 class AnalyzeData(object):
@@ -68,11 +69,47 @@ class AnalyzeData(object):
         self.k_lines = k_lines
         pass
 
+    @property
+    def price_change_percent_sum(self):
+        return self.price_change_percent_sum_from_last(len(self.k_lines))
+
+    @property
+    def volume_sum(self):
+        sum_of_volume = 0
+
+        for k_line in self.k_lines:  # type: OHLCVValue
+            sum_of_volume += k_line.volume
+
+        return sum_of_volume
+
+    def volume_sum_from_last(self, count: 'int'):
+        arr_len = len(self.k_lines)
+        sum_of_volume = 0
+        start_index = (arr_len - count) if arr_len >= count else 0
+
+        for i in range(start_index, arr_len):  # type: OHLCVValue
+            sum_of_volume += self.k_lines[i].volume
+
+        return sum_of_volume
+
+    def price_change_percent_sum_from_last(self, count: int):
+        arr_len = len(self.k_lines)
+        sum_of_change = 0
+        start_index = (arr_len - count) if arr_len >= count else 0
+
+        for i in range(start_index, arr_len):  # type: OHLCVValue
+            sum_of_change += self.k_lines[i].price_change_percent
+
+        return sum_of_change
+
+    def volume_SMA(self, count: int):
+        return self.volume_sum_from_last(count) / count
+
 
 class AnalyzeResult(object):
     """docstring for AnalyzeResult"""
+    is_rise_quickly = False
 
-    def __init__(self, slope):
+    def __init__(self):
         super(AnalyzeResult, self).__init__()
-        self.slope = slope
         pass
