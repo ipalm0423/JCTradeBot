@@ -4,3 +4,6 @@ app/JCTradeBot/__pycache__/analyzer.cpython-36.pyc
 app/JCTradeBot/__pycache__/models.cpython-36.pyc
 app/JCTradeBot/__pycache__/parser.cpython-36.pyc
 app/JCTradeBot/__pycache__/trader.cpython-36.pyc
+app/JCTradeBot/__pycache__/messenger.cpython-36.pyc
+.idea/
+
