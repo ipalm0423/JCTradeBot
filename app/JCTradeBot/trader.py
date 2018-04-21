@@ -12,12 +12,12 @@ class Trader(object):
     _thread = None
     _shouldRunning = True
 
-    def __init__(self, period, parser, analyzer):
+    def __init__(self, period, parser, analyzer, messenger=None):
         super(Trader, self).__init__()
         self.period = period
         self.parser = parser  # type: DataParser
         self.analyzer = analyzer
-        self.messenger = JCBMessenger()
+        self.messenger = messenger
         pass
 
     def start(self):
@@ -50,3 +50,8 @@ class Trader(object):
 
             # sleep
             time.sleep(self.period)
+
+
+
+class TestTrader(Trader):
+    def __init__(self):
