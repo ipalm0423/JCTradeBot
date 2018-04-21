@@ -1,5 +1,4 @@
 import time
-import asyncio
 import threading
 from .models import AnalyzeData, AnalyzeResult
 from .messenger import JCBMessenger
@@ -12,12 +11,12 @@ class Trader(object):
     _thread = None
     _shouldRunning = True
 
-    def __init__(self, period, parser, analyzer, messenger=None):
+    def __init__(self, period=None, parser=None, analyzer=None, messenger=None):
         super(Trader, self).__init__()
         self.period = period
         self.parser = parser  # type: DataParser
         self.analyzer = analyzer
-        self.messenger = messenger
+        self.messenger = messenger  # type: JCBMessenger
         pass
 
     def start(self):
@@ -38,19 +37,21 @@ class Trader(object):
                 break
                 pass
 
-            # parsing
-            k_lines = self.parser.get_kline_in_minute(20)
-            new_data = AnalyzeData(k_lines)
-
-            # analytic
-            result = self.analyzer.update_new_data(new_data)  # type: AnalyzeResult
-
-            # message
-            self.messenger.send_text(result.reminder_msg())
+            self.calculate()
 
             # sleep
             time.sleep(self.period)
 
+    def calculate(self):
+        # parsing
+        k_lines = self.parser.get_next_klines()
+        new_data = AnalyzeData(k_lines)
+
+        # analytic
+        result = self.analyzer.update_new_data(new_data)  # type: AnalyzeResult
+
+        # message
+        self.messenger.send_text(result.reminder_msg())
 
 
 class TestTrader(Trader):
