@@ -1,8 +1,8 @@
 import time
 import threading
-from .models import AnalyzeData, AnalyzeResult
-from .messenger import JCBMessenger
-from .parser import DataParser
+from JCTradeBot.Model.models import AnalyzeData, AnalyzeResult
+from JCTradeBot.Messenger.messenger import JCBMessenger
+from JCTradeBot.Parser.parser import DataParser
 
 
 class Trader(object):

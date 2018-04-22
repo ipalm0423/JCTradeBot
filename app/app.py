@@ -1,9 +1,9 @@
-from JCTradeBot.trader import Trader
-from JCTradeBot.parser import DataParser
-from JCTradeBot.analyzer import Analyzer
+from JCTradeBot.Trader.trader import Trader
+from JCTradeBot.Parser.parser import DataParser
+from JCTradeBot.Analyzer.analyzer import Analyzer
 from time import sleep
-from app.JCTradeBot.constant import *
-from .messenger import JCBMessenger
+from JCTradeBot.constant import *
+from JCTradeBot.Messenger.messenger import JCBMessenger
 
 """trader"""
 trader_list = [k_ETHUSDT, k_BTCUSDT, k_NEOUSDT, k_ADAUSDT, k_ADAETH, k_IOTABTC]

@@ -7,3 +7,15 @@ app/JCTradeBot/__pycache__/trader.cpython-36.pyc
 app/JCTradeBot/__pycache__/messenger.cpython-36.pyc
 .idea/
 
+app/__pycache__/test.cpython-36.pyc
+app/JCTradeBot/__pycache__/constant.cpython-36.pyc
+app/JCTradeBot/Analyzer/__pycache__/__init__.cpython-36.pyc
+app/JCTradeBot/Analyzer/__pycache__/analyzer.cpython-36.pyc
+app/JCTradeBot/Messenger/__pycache__/__init__.cpython-36.pyc
+app/JCTradeBot/Messenger/__pycache__/messenger.cpython-36.pyc
+app/JCTradeBot/Model/__pycache__/__init__.cpython-36.pyc
+app/JCTradeBot/Model/__pycache__/models.cpython-36.pyc
+app/JCTradeBot/Parser/__pycache__/__init__.cpython-36.pyc
+app/JCTradeBot/Parser/__pycache__/parser.cpython-36.pyc
+app/JCTradeBot/Trader/__pycache__/__init__.cpython-36.pyc
+app/JCTradeBot/Trader/__pycache__/trader.cpython-36.pyc
