@@ -1,4 +1,4 @@
-from JCTradeBot.Model.models import AnalyzeData, AnalyzeResult
+from app.JCTradeBot.Model.models import AnalyzeData, AnalyzeResult
 
 
 class Analyzer(object):

@@ -1,5 +1,5 @@
 from binance.client import Client
-from JCTradeBot.Model.models import OHLCVValue, AnalyzeData
+from app.JCTradeBot.Model.models import OHLCVValue, AnalyzeData
 
 
 class DataParser(object):
