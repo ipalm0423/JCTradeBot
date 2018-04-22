@@ -1,9 +1,10 @@
 from binance.client import Client
-from app.JCTradeBot.models import OHLCVValue
+from app.JCTradeBot.models import OHLCVValue, AnalyzeData
 
 
 class DataParser(object):
     """docstring for DataParser"""
+    data_interval = 20
 
     def __init__(self, symbol=None):
         self.symbol = symbol
@@ -15,7 +16,7 @@ class DataParser(object):
                                                     "{} minutes ago UTC".format(minutes))
         return OHLCVValue.from_data_array(k_lines)
 
-    def get_next_klines(self):
-        return self.get_kline_in_minute(20)
+    def get_next_data(self):
+        return AnalyzeData(self.get_kline_in_minute(self.data_interval))
 
 

@@ -44,8 +44,7 @@ class Trader(object):
 
     def calculate(self):
         # parsing
-        k_lines = self.parser.get_next_klines()
-        new_data = AnalyzeData(k_lines)
+        new_data: AnalyzeData = self.parser.get_next_data()
 
         # analytic
         result = self.analyzer.update_new_data(new_data)  # type: AnalyzeResult
