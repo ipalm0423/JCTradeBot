@@ -2,9 +2,21 @@ import telegram
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram import Message, User
+import csv
 
 
 class JCBMessenger(object):
+    def __init__(self):
+        # wait override
+        pass
+
+    def send_text(self, text):
+        print(text)
+        # need override
+        pass
+
+
+class TelegramMessenger(JCBMessenger):
     listener_ids = ['-256959090']
 
     def __init__(self):
@@ -17,19 +29,21 @@ class JCBMessenger(object):
     def dispatcher(self):
         return self.updater.dispatcher
 
-    def setup_handler(self):
-        start_handler = CommandHandler('start', self.start_handler)
-        self.dispatcher.add_handler(start_handler)
-
-        add_handler = CommandHandler('add', self.add)
-        self.dispatcher.add_handler(add_handler)
-
+    # override
     def send_text(self, text):
         if not text or len(text) == 0:
             return
 
         for chat_id in self.listener_ids:
             self.bot.send_message(chat_id=chat_id, text=text)
+
+    # telegram handler
+    def setup_handler(self):
+        start_handler = CommandHandler('start', self.start_handler)
+        self.dispatcher.add_handler(start_handler)
+
+        add_handler = CommandHandler('add', self.add_handler)
+        self.dispatcher.add_handler(add_handler)
 
     @staticmethod
     def start_handler(bot, update):
@@ -38,7 +52,7 @@ class JCBMessenger(object):
         if msg:
             bot.send_message(chat_id=update.message.chat_id, text="Hi {}, 你好! 我是機器人".format(msg.from_user.username))
 
-    def add(self, bot, update):
+    def add_handler(self, bot, update):
         user = update.message.from_user  # type: User
         new_chat_id = update.message.chat_id
 
@@ -49,3 +63,13 @@ class JCBMessenger(object):
             bot.send_message(chat_id=new_chat_id, text="{} 您已經加入了".format(user.username))
 
     pass
+
+
+class CSVMessenger(JCBMessenger):
+    def __init__(self):
+        super(CSVMessenger, self).__init__()
+        pass
+
+    def send_text(self, text):
+        # csv
+        pass
