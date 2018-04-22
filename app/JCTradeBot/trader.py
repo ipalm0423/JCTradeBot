@@ -54,4 +54,16 @@ class Trader(object):
 
 
 class TestTrader(Trader):
-    def __init__(self):
+    def __init__(self, period=None, parser=None, analyzer=None, messenger=None, test_days_before=None):
+        super(TestTrader, self).__init__(period=period, parser=parser, analyzer=analyzer, messenger=messenger)
+        self.test_days_before = test_days_before
+
+    def run(self):
+        print("Test Trading Start: [ {} ] from {} days ago".format(self.parser.symbol, self.test_days_before))
+        total_test_minutes = self.test_days_before * 24 * 60
+        current_minute = 0
+
+        while current_minute < total_test_minutes:
+            self.calculate()
+            total_test_minutes += 1
+            pass
