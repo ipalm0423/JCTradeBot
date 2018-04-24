@@ -23,7 +23,7 @@ class Analyzer(object):
 
     def update_new_data(self, analyze_data: AnalyzeData) -> AnalyzeResult:
         self.current_data = analyze_data
-        result = AnalyzeResult(self.symbol)
+        result = AnalyzeResult(self.symbol, analyze_data)
         print("\nanalyze {} from time:{} to time:{}".format(self.symbol,
                                                           analyze_data.start_date_str,
                                                           analyze_data.end_date_str))

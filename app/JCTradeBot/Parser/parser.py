@@ -31,11 +31,11 @@ class TestDataParser(DataParser):
     def get_kline_in_days(self, days=None):
         k_lines = self.client.get_historical_klines(self.symbol,
                                                     Client.KLINE_INTERVAL_1MINUTE,
-                                                    "{{} days ago UTC}".format(days))
+                                                    "{} days ago UTC".format(days))
         return OHLCVValue.from_data_array(k_lines)
 
     def get_next_data(self):
-        end_index = self.data_index + self.period
+        end_index = self.data_index + self.data_interval
 
         if end_index > len(self.k_lines):
             return []

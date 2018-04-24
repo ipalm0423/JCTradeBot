@@ -50,7 +50,7 @@ class Trader(object):
         result = self.analyzer.update_new_data(new_data)  # type: AnalyzeResult
 
         # message
-        self.messenger.send_text(result.reminder_msg())
+        self.messenger.send_result(result)
 
 
 class TestTrader(Trader):
@@ -63,7 +63,7 @@ class TestTrader(Trader):
         total_test_minutes = self.test_days_before * 24 * 60
         current_minute = 0
 
-        while current_minute < total_test_minutes:
+        while current_minute + self.parser.data_interval < total_test_minutes:
+            current_minute += 1
             self.calculate()
-            total_test_minutes += 1
             pass

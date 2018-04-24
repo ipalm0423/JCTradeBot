@@ -127,9 +127,10 @@ class AnalyzeResult(object):
     is_change_quickly = False
     is_rise = False
 
-    def __init__(self, symbol):
+    def __init__(self, symbol=None, data=None):
         super(AnalyzeResult, self).__init__()
         self.symbol = symbol
+        self.data = data  # type: AnalyzeData
         pass
 
     def __str__(self):
@@ -140,6 +141,11 @@ class AnalyzeResult(object):
 
         return description
 
+    @property
+    def date_str(self):
+        return "date from " + self.data.start_date_str + " to " + self.data.end_date_str
+
+    @property
     def reminder_msg(self):
         if self.is_change_quickly:
             direction = self.k_going_up if self.is_rise else self.k_going_down

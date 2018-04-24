@@ -3,11 +3,12 @@ from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram import Message, User
 import csv
-
+import datetime
+from app.JCTradeBot.Model.models import AnalyzeResult
 
 class JCBMessenger(object):
     def __init__(self):
-        # wait override
+        # need override
         pass
 
     def send_text(self, text):
@@ -15,6 +16,9 @@ class JCBMessenger(object):
         # need override
         pass
 
+    def send_result(self, result=None):
+        # need override
+        pass
 
 class TelegramMessenger(JCBMessenger):
     listener_ids = ['-256959090']
@@ -36,6 +40,9 @@ class TelegramMessenger(JCBMessenger):
 
         for chat_id in self.listener_ids:
             self.bot.send_message(chat_id=chat_id, text=text)
+
+    def send_result(self, result: AnalyzeResult = None):
+        self.send_text("time: " + result.date_str() + "with result: " + result.reminder_msg())
 
     # telegram handler
     def setup_handler(self):
@@ -66,10 +73,32 @@ class TelegramMessenger(JCBMessenger):
 
 
 class CSVMessenger(JCBMessenger):
+
+    headers = ['time', 'description']
+
     def __init__(self):
         super(CSVMessenger, self).__init__()
+        self.file_name = datetime.datetime.now().strftime('logs/log-%Y-%m-%d-%H:%M:%S.csv')
+        self.create_file()
         pass
 
+    def create_file(self):
+        self.write_to_file(self.headers)
+
+    def write_to_file(self, row=None):
+        if row is None:
+            return
+
+        with open(self.file_name, 'a') as f:
+            file_writer = csv.writer(f, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            file_writer.writerow(row)
+
     def send_text(self, text):
-        # csv
+        self.write_to_file([text])
+
+    def send_result(self, result: AnalyzeResult = None):
+        msg = result.reminder_msg
+
+        if msg is not None:
+            self.write_to_file([result.date_str, msg])
         pass
