@@ -21,7 +21,7 @@ class Trader(object):
 
     def start(self):
         self._thread = threading.Thread(target=self.run, args=())
-        self._thread.daemon = True
+        self._thread.daemon = False
         self._thread.start()
         pass
 
