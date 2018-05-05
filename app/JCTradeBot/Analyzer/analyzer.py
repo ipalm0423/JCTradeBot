@@ -2,6 +2,29 @@ from app.JCTradeBot.Model.models import AnalyzeData, AnalyzeResult
 
 
 class Analyzer(object):
+
+    symbol = None
+    current_data = None
+    data_list = []
+
+    def __init__(self, symbol=None):
+        super(Analyzer, self).__init__()
+        self.symbol = symbol
+        self.update_base_data()
+        pass
+
+    def update_base_data(self):
+        # should override
+        pass
+
+    def update_new_data(self, analyze_data: AnalyzeData) -> AnalyzeResult:
+        # should override
+        pass
+
+    pass
+
+
+class PumpAnalyzer(Analyzer):
     maxBudget = 0
     currentPurchase = 0
 
@@ -9,13 +32,10 @@ class Analyzer(object):
     vol_change_ratio_gate = 2
     price_change_gate = 5
 
-    """docstring for Analyzer"""
+    """docstring for PumpAnalyzer"""
 
-    def __init__(self, symbol):
-        super(Analyzer, self).__init__()
-        self.symbol = symbol
-        self.update_base_data()
-        self.current_data = None
+    def __init__(self, symbol=None):
+        super(PumpAnalyzer, self).__init__(symbol=symbol)
         pass
 
     def update_base_data(self):
