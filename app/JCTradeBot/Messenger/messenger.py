@@ -6,6 +6,7 @@ import csv
 import datetime
 from app.JCTradeBot.Model.models import AnalyzeResult
 
+
 class JCBMessenger(object):
     def __init__(self):
         # need override
@@ -19,6 +20,7 @@ class JCBMessenger(object):
     def send_result(self, result=None):
         # need override
         pass
+
 
 class TelegramMessenger(JCBMessenger):
     listener_ids = ['-256959090']
